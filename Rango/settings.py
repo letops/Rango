@@ -41,7 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'easy_thumbnails',
     'Base',
-    'Lockpicker',
+    'Salus',
 )
 
 MIDDLEWARE_CLASSES = (
