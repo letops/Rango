@@ -43,6 +43,8 @@ Temporary Items
 .apdisk
 
 # Rango
+db.sqlite3
 .idea
+migrations
 .pyc
 __pycache__
