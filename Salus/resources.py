@@ -1,7 +1,7 @@
 #-*- coding:utf-8 -*-
-from djangorestframework.resources import ModelResource
+from rest_framework.resources import ModelResource
 from django.core.urlresolvers import reverse
-from models import Password
+from Salus.models import Password
  
   
 class PasswordResource(ModelResource):
