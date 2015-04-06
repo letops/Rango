@@ -1,4 +1,3 @@
-#-*- coding:utf-8 -*-
 from Base.models import RangoUser
 from django.conf import settings
 import re

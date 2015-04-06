@@ -26,7 +26,7 @@ DEBUG = True if DEPLOYMENT is False else False
 
 TEMPLATE_DEBUG = True if DEPLOYMENT is False else False
 
-ALLOWED_HOSTS = ['104.131.74.125',]
+ALLOWED_HOSTS = ['104.131.74.125', ]
 
 ADMINS = ()
 
