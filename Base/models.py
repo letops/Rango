@@ -1,5 +1,4 @@
-#-*- coding:utf-8 -*-
-from Base import modelsConfig as mc, fileManager as fM, userManager as uM
+from Base import modelsConfig as mC, modelsFunctions as fM, userManager as uM
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from django.utils import timezone
@@ -8,12 +7,18 @@ from easy_thumbnails.fields import ThumbnailerImageField
 
 # Create your models here.
 class RangoUser(AbstractBaseUser, PermissionsMixin):
-    nickname = models.CharField(max_length=mc.RangoUser_NicknameLength, blank=True, null=True)
-    fullname = models.CharField(max_length=mc.RangoUser_FullnameLength, blank=True, null=True)
-    avatar = ThumbnailerImageField(upload_to=fM.avatarFile, default=mc.RangoUser_AvatarDefault, blank=True, null=True)
-    username = models.CharField(max_length=mc.RangoUser_UsernameLength, blank=False, null=False, unique=True)
-    email = models.EmailField(blank=False, null=False, unique=False)
-    birthday = models.DateField(blank=True, null=True)
+    nickname = models.CharField(max_length=mC.RangoUser_NicknameLength, blank=True, null=True,
+                                verbose_name='Nickname')
+    fullname = models.CharField(max_length=mC.RangoUser_FullnameLength, blank=True, null=True,
+                                verbose_name='Fullname')
+    avatar = ThumbnailerImageField(upload_to=fM.avatarFile, default=mC.RangoUser_AvatarDefault, blank=True, null=True,
+                                   verbose_name='Avatar')
+    username = models.CharField(max_length=mC.RangoUser_UsernameLength, blank=False, null=False, unique=True,
+                                verbose_name='Username (For login)')
+    email = models.EmailField(blank=False, null=False, unique=False,
+                              verbose_name='Email (For login)')
+    birthday = models.DateField(blank=True, null=True,
+                                verbose_name='Birthday')
     date_joined = models.DateTimeField(default=timezone.now)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)

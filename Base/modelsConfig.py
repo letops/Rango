@@ -1,5 +1,3 @@
-#-*- coding:utf-8 -*-
-
 # RangoUser
 RangoUser_NicknameLength = 30
 RangoUser_FullnameLength = 80
