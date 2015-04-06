@@ -6,37 +6,22 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 from Base import forms, messages as msgs, environments, queries
-
-#
-# -------------------------------------------------- SIMPLE VARS ------------------------------------------------------#
-GREEN = 'green'
-BLUE = 'blue'
-YELLOW = 'yellow'
-RED = 'red'
+from Base.queries import generate_msg, GREEN, YELLOW, RED, BLUE
 
 
-def generate_msg(request, state=None, title=None, body=None):
-    mtype = None
-    if state == GREEN:
-        mtype = messages.SUCCESS
-    elif state == BLUE:
-        mtype = messages.INFO
-    elif state == YELLOW:
-        mtype = messages.WARNING
-    elif state == RED:
-        mtype = messages.ERROR
-
-    messages.add_message(
-        request,
-        mtype,
-        extra_tags=title,
-        message=body,
-        fail_silently=True
-    )
+@login_required()
+def home(request):
+    return render_to_response('_rangoBase.html', context_instance=RequestContext(request))
 
 
 def returnToHome():
     return HttpResponseRedirect(urlresolvers.reverse('home'))
+
+
+@login_required()
+def logout(request):
+    auth.logout(request)
+    return HttpResponseRedirect(urlresolvers.reverse('login'))
 
 
 def login(request):
@@ -110,10 +95,10 @@ def signup(request):
 @login_required()
 def GenericList(request, action):
     #template_vars = {'nav': get_nav_options(request), 'side': get_side_options(request)}
-    template_vars = dict()
+    t_vars = dict()
     env = environments.Environment(action)
-    if request.method == 'GET' and request.user.has_perm('Base.list_%s' % env.model):
-        template_vars['headers_list'], template_vars['objects_list'] = queries.UsersList(request, env)
+    if request.method == 'GET' and request.user.has_perm('%s.list_%s' % (env.data_model._meta.app_label, env.model)):
+        t_vars['headers_list'], t_vars['objects_list'], t_vars['vars'] = queries.GenericList(request, env)
     else:
         generate_msg(request, YELLOW, msgs.WARNING, msgs.NO_PERM)
         return returnToHome()
@@ -121,17 +106,17 @@ def GenericList(request, action):
     template = env.template
     return render_to_response(
         template,
-        context_instance=RequestContext(request, template_vars)
+        context_instance=RequestContext(request, t_vars)
     )
 
 
 def get_permissions(user, environment):
     add = change = delete = False
-    if user.has_perm('%s.add_%s' % (environment.app, environment.model.lower())):
+    if user.has_perm('%s.add_%s' % (environment.data_model._meta.app_label, environment.model.lower())):
         add = True
-    if user.has_perm('%s.change_%s' % (environment.app, environment.model.lower())):
+    if user.has_perm('%s.change_%s' % (environment._meta.app_label, environment.model.lower())):
         change = True
-    if user.has_perm('%s.delete_%s' % (environment.app, environment.model.lower())):
+    if user.has_perm('%s.delete_%s' % (environment._meta.app_label, environment.model.lower())):
         delete = True
     return add, change, delete
 

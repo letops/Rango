@@ -1,17 +1,15 @@
-from Base import models, forms, serializers
+from Base import models, forms, queries, serializers
 
 
 class Environment:
 
     def __init__(self, action):
-        self.app = 'Base'
         self.action = action
         self.model = None
         self.data_model = None
         self.form = None
-        self.serializer = None
+        self.function = None
         self.template = None
-        self.fields = ()
         self.action_completed_urlname = None
 
         self.load_data()
@@ -27,5 +25,5 @@ class Environment:
         if self.action == 'list_users':
             self.model = 'RangoUser'
             self.data_model = models.RangoUser
-            self.template = 'genlist.html'
-            self.fields = ('Username', 'Email', 'Avatar')
+            self.template = 'lists.html'
+            self.function = queries.UsersListQuery

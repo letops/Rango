@@ -10,8 +10,8 @@ class Password(models.Model):
     """
     title = models.CharField(max_length=mC.password_title_length,
                              verbose_name='Name')
-    username = models.ForeignKey(RangoUser, related_name="passwords", blank=False, null=False,
-                                 verbose_name='User')
+    user = models.ForeignKey(RangoUser, related_name="passwords", blank=False, null=False,
+                             verbose_name='User')
     password = models.CharField(max_length=mC.password_password_length,
                                 verbose_name='Password')
     url = models.URLField(max_length=mC.password_url_length, blank=True,

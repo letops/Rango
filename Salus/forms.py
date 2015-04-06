@@ -8,4 +8,4 @@ from Salus import models
 class PasswordForm(ModelForm):
     class Meta:
         model = models.Password
-        fields = ('title', 'password', 'url', 'notes' )
+        fields = ('title', 'password', 'url', 'notes')

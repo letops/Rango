@@ -1,4 +1,31 @@
-from Base import models
+from Base import models, serializers, messages as msgs
+from django.contrib import messages
+import sys, simplejson
+
+GREEN = 'green'
+BLUE = 'blue'
+YELLOW = 'yellow'
+RED = 'red'
+
+
+def generate_msg(request, state=None, title=None, body=None):
+    mtype = None
+    if state == GREEN:
+        mtype = messages.SUCCESS
+    elif state == BLUE:
+        mtype = messages.INFO
+    elif state == YELLOW:
+        mtype = messages.WARNING
+    elif state == RED:
+        mtype = messages.ERROR
+
+    messages.add_message(
+        request,
+        mtype,
+        extra_tags=title,
+        message=body,
+        fail_silently=True
+    )
 
 
 def actions_in_list(user, model, data_model):
@@ -18,8 +45,25 @@ def actions_in_list(user, model, data_model):
     return actions
 
 
-def UsersList(request, environment):
-    objects = models.RangoUser.objects.all()
-    serializer = environment.serializer(objects, many=True)
-    fields_list = environment.fields
-    return fields_list, serializer.data
+def UsersListQuery(request, env):
+    try:
+        headers = ('Username', 'Email', 'Avatar')
+        if request.user.is_admin() or request.user.is_super():
+            objects = env.data_model.objects.all()
+        else:
+            objects = env.data_model.objects.filter(id=request.user.id)
+        serializer = serializers.SimpleUserSerializer(objects, many=True)
+        return headers, simplejson.loads(simplejson.dumps(serializer.data)), {'list_name': 'Users',
+                                                                              'data_model': env.data_model,
+                                                                              'add': 'add_user',
+                                                                              'change': 'change_user',
+                                                                              'delete': 'delete_user'}
+
+    except:
+        print("Unexpected error:", sys.exc_info())
+        generate_msg(request, RED, msgs.ERROR, msgs.TICKET)
+        return None, None, None
+
+
+def GenericList(request, environment):
+    return environment.function(request, environment)
