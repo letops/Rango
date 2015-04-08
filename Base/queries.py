@@ -8,7 +8,7 @@ YELLOW = 'yellow'
 RED = 'red'
 
 
-def generate_msg(request, state=None, title=None, body=None):
+def generate_msg(request, state=BLUE, title='Empty', body='Empty'):
     mtype = None
     if state == GREEN:
         mtype = messages.SUCCESS

@@ -1,6 +1,18 @@
 from django import template
+from django.core import urlresolvers
 
 register = template.Library()
+
+
+@register.filter()
+def equal_urlnames(url_path, url_name):
+    return urlresolvers.resolve(url_path).url_name == url_name
+
+
+@register.filter()
+def geturlid(url_path):
+    return urlresolvers.resolve(url_path).kwargs['id']
+
 
 
 @register.filter()

@@ -114,9 +114,9 @@ def get_permissions(user, environment):
     add = change = delete = False
     if user.has_perm('%s.add_%s' % (environment.data_model._meta.app_label, environment.model.lower())):
         add = True
-    if user.has_perm('%s.change_%s' % (environment._meta.app_label, environment.model.lower())):
+    if user.has_perm('%s.change_%s' % (environment.data_model._meta.app_label, environment.model.lower())):
         change = True
-    if user.has_perm('%s.delete_%s' % (environment._meta.app_label, environment.model.lower())):
+    if user.has_perm('%s.delete_%s' % (environment.data_model._meta.app_label, environment.model.lower())):
         delete = True
     return add, change, delete
 

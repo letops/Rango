@@ -33,7 +33,11 @@
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <link rel="stylesheet" type="text/css" href="{%  static 'css/normalize.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-notify.css' %}">
-
+    <style>
+      .content{
+        margin-bottom: 5%;
+      }
+    </style>
     {% block extra_css %}
     {% endblock %}
     {% block extra_js_top %}
@@ -89,22 +93,21 @@
         <div class="col-md-3" id="leftCol">
           <ul class="nav nav-stacked" id="sidebar">
             <li><a href="{% url 'home' %}">Home</a></li>
-            <li><a href="{% url 'list_passwords' %}">Salus</a></li>
+            <li><a href="{% url 'list_password' %}">Salus</a></li>
           </ul>
         </div><!--/left-->
 
         <!--right-->
         <div class="col-md-9">
-          {% block content %}
-            <p>
-              Rango is a school/personal project created for the study and integration of a better Django architecture. This
-              is being compared to previous projects developed in django by the same author. Rango is the Django project, while
-              Salus is a password-locker application, which has an AES data-encryption for the storage of all the personal data.
-            </p>
-            <p>
-
-            </p>
-          {% endblock %}
+          <div class="row">
+            {% block content %}
+              <p>
+                Rango is a school/personal project created for the study and integration of a better Django architecture. This
+                is being compared to previous projects developed in django by the same author. Rango is the Django project, while
+                Salus is a password-locker application, which has an AES data-encryption for the storage of all the personal data.
+              </p>
+            {% endblock %}
+          </div>
         </div><!--/right-->
       </div><!--/row-->
     </div><!--/container-->
