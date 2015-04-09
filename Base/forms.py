@@ -75,10 +75,11 @@ class RangoUserProfileForm(forms.ModelForm):
         super(RangoUserProfileForm, self).__init__(*args, **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs = {'class': 'form-control'}
+        self.fields['birthday'].widget.attrs['placeholder'] = 'yyyy-mm-dd'
 
     class Meta:
         model = models.RangoUser
-        fields = ('nickname', 'fullname', 'avatar', 'birthday')
+        fields = ('nickname', 'fullname', 'birthday')
 
     def clean_password2(self):
         password1 = self.cleaned_data.get('password1')

@@ -83,7 +83,7 @@
           {% endfor %}
             <td>
               <a class="btn btn-warning{% if user|can_edit:vars.data_model == False %} disabled{% endif %}" href="{% url vars.change t.id %}" ><i class="fa fa-pencil fa-inverse"></i></a>
-              <a class="btn btn-danger{% if user|can_delete:vars.data_model == False %} disabled{% endif %}" href="{% url vars.delete t.id %}" ><i class="fa fa-trash-o fa-inverse"></i></a>
+              <!--a class="btn btn-danger{% if user|can_delete:vars.data_model == False %} disabled{% endif %}" href="{% url vars.delete t.id %}" ><i class="fa fa-trash-o fa-inverse"></i></a-->
             </td>
           </tr>
         {% endfor %}
