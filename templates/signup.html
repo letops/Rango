@@ -30,6 +30,7 @@
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <style>
       .content{
+        margin-top: 5%;
         margin-bottom: 5%;
       }
     </style>
@@ -56,7 +57,7 @@
     <!--main-->
     <div class="container content">
       <div class="row">
-        <div class="col-xs-10 col-md-8 col-xs-offset-1 col-md-offset-2">
+        <div class="col-xs-8 col-md-4 col-xs-offset-2 col-md-offset-4">
           <form class="form-horizontal" method="post">
             {% csrf_token %}
 
@@ -95,8 +96,8 @@
               {% empty %}
               {% endfor %}
             </div>
-
-            <div class="col-xs-12 col-md-4 col-xs-offset-0 col-md-offset-4">
+            <br/>
+            <div class="col-xs-12 col-md-8 col-xs-offset-0 col-md-offset-2">
               <button type="submit" class="btn btn-success btn-lg btn-block"><i class="fa fa-plus"></i> Create your user</button>
             </div>
 

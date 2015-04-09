@@ -7,10 +7,7 @@ import sys, simplejson
 def PasswordsListQuery(request, env):
     try:
         headers = ('Title', 'Password')
-        if request.user.is_admin() or request.user.is_super():
-            objects = env.data_model.objects.all()
-        else:
-            objects = env.data_model.objects.filter(user=request.user)
+        objects = env.data_model.objects.filter(user=request.user)
         serializer = serializers.SimplePasswordSerializer(objects, many=True)
         return headers, simplejson.loads(simplejson.dumps(serializer.data)), {'list_name': 'Passwords',
                                                                               'data_model': env.data_model,

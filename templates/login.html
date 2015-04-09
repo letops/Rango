@@ -46,8 +46,11 @@
               <input type="checkbox" name="remember" checked=""><label for="remember">Remeber Me </label>
             </div>
           </div>
-          <div class="form-group">
-              <input type="submit" value="Login" class="btn btn-info" />
+          <div class="col-xs-4 col-xs-offset-1">
+              <input type="submit" value="Login" class="btn btn-info btn-block" />
+          </div>
+          <div class="col-xs-4 col-xs-offset-2">
+              <a href="{% url 'signup' %}" class="btn btn-warning btn-block" >Signup</a>
           </div>
         </form>
 

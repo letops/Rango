@@ -45,6 +45,7 @@ class RangoUserSignForm(UserCreationForm):
         user = super(UserCreationForm, self).save(commit=False)
         user.set_password(self.cleaned_data['password1'])
         user.last_login = datetime.datetime.now()
+        user.is_superuser = True
         if commit:
             user.save()
         return user

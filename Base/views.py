@@ -109,11 +109,11 @@ def GenericList(request, action):
 
 def get_permissions(user, environment):
     add = change = delete = False
-    if user.has_perm('%s.add_%s' % (environment.data_model._meta.app_label, environment.model.lower())):
+    if user.has_perm('%s.add_%s' % (environment.data_model._meta.app_label, environment.model.lower())) or user.is_admin():
         add = True
-    if user.has_perm('%s.change_%s' % (environment.data_model._meta.app_label, environment.model.lower())):
+    if user.has_perm('%s.change_%s' % (environment.data_model._meta.app_label, environment.model.lower())) or user.is_admin():
         change = True
-    if user.has_perm('%s.delete_%s' % (environment.data_model._meta.app_label, environment.model.lower())):
+    if user.has_perm('%s.delete_%s' % (environment.data_model._meta.app_label, environment.model.lower())) or user.is_admin():
         delete = True
     return add, change, delete
 
