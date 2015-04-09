@@ -29,7 +29,6 @@ def GenericList(request, action):
 
 def get_permissions(user, environment):
     add = change = delete = False
-    print(user.is_staff())
     if user.has_perm('%s.add_%s' % (environment.data_model._meta.app_label, environment.model.lower())):
         add = True
     if user.has_perm('%s.change_%s' % (environment.data_model._meta.app_label, environment.model.lower())):
