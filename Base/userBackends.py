@@ -1,4 +1,3 @@
-#-*- coding:utf-8 -*-
 from Base.models import RangoUser
 from django.conf import settings
 import re
@@ -12,7 +11,6 @@ class EmailOrUsernameModelBackend(object):
             kwargs = {'username': username}
         try:
             user = RangoUser.objects.get(**kwargs)
-            print(user.is_authenticated())
             if user.check_password(password):
                 return user
         except RangoUser.DoesNotExist:

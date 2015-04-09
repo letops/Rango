@@ -26,11 +26,22 @@ DEBUG = True if DEPLOYMENT is False else False
 
 TEMPLATE_DEBUG = True if DEPLOYMENT is False else False
 
-ALLOWED_HOSTS = ['104.131.74.125',]
+ALLOWED_HOSTS = ['104.131.74.125', ]
 
 ADMINS = ()
 
 # Application definition
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.core.context_processors.tz",
+    "django.core.context_processors.request",
+    "django.contrib.messages.context_processors.messages",
+)
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -40,6 +51,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'easy_thumbnails',
+    'rest_framework',
     'Base',
     'Salus',
 )
@@ -109,7 +121,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend'
 )
 
-LOGIN_URL = '/en/login/'
+LOGIN_URL = '/login/'
 
 
 # ----------------------- EASY_THUMBNAILS ------------------------------#
