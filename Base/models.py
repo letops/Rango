@@ -33,7 +33,7 @@ class RangoUser(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = 'Users'
 
     def __str__(self):
-        name = self.nickname if self.nickname != '' else self.username
+        name = self.nickname if self.nickname is not None else self.username
         return "%s" % name
 
     def get_fullname(self):

@@ -26,3 +26,12 @@ def PasswordsListQuery(request, env):
 
 def GenericList(request, environment):
     return environment.function(request, environment)
+
+
+def delete_password(id):
+    try:
+        password = models.Password.objects.get(id=id)
+        password.delete()
+        return True
+    except:
+        return False

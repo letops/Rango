@@ -121,7 +121,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend'
 )
 
-LOGIN_URL = '/en/login/'
+LOGIN_URL = '/login/'
 
 
 # ----------------------- EASY_THUMBNAILS ------------------------------#

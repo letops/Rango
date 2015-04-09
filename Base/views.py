@@ -2,10 +2,10 @@ from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.core import urlresolvers
 from django.db import transaction
-from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render, render_to_response
+from django.http import HttpResponseRedirect
+from django.shortcuts import render_to_response
 from django.template import RequestContext
-from Base import forms, messages as msgs, environments, queries
+from Base import messages as msgs, environments, queries
 from Base.queries import generate_msg, GREEN, YELLOW, RED, BLUE
 
 
@@ -73,15 +73,12 @@ def signup(request):
         new_object, object = push_post(request, env=env, add=True)
         # create/update has succeeded
         if new_object is not None:
-            generate_msg(request, GREEN, msgs.SUCCESS, 'You have created your account.')
+            #generate_msg(request, GREEN, msgs.SUCCESS, 'You have created your account.')
             return HttpResponseRedirect(urlresolvers.reverse(env.action_completed_urlname))
-        else:
-            generate_msg(request, YELLOW, msgs.WARNING, 'An error has occurred, please verify your signup information.')
-
     else:
         new_object, object = push_get(request, env=env, add=True)
 
-    formas = {'object': object}
+    formas = {'django_form': object}
     return render_to_response(
         env.template,
         formas,
@@ -121,27 +118,29 @@ def get_permissions(user, environment):
     return add, change, delete
 
 
+@login_required()
 @transaction.atomic()
 def object_push(request, id=None, action=""):
     template_vars = dict()
 
     env = environments.Environment(action)
     perm_add, perm_change, perm_delete = get_permissions(request.user, env)
-    object = None
+    instance = None
     if request.method == 'POST':
-        new_object, object = push_post(request, id, env, perm_add, perm_change, perm_delete)
-        if new_object is not None:
+        new_instance, instance = push_post(request, id, env, perm_add, perm_change, perm_delete)
+        if new_instance is not None:
             # At this point, create/update has succeeded
             if id is not None:
-                generate_msg(request, GREEN) #TODO
+                generate_msg(request, GREEN, 'Success', 'Your changes were saved in the system')
             else:
-                generate_msg(request, GREEN) #TODO
+                generate_msg(request, GREEN, 'Success', 'Your object was created successfully')
             return HttpResponseRedirect(urlresolvers.reverse(env.action_completed_urlname))
     elif request.method == 'GET':
         #Request the create/update form
-        new_object, object = push_get(request, id, env, perm_add, perm_change, perm_delete)
+        new_instance, instance = push_get(request, id, env, perm_add, perm_change, perm_delete)
 
-    formas = {'object': object}
+    print(instance)
+    formas = {'django_form': instance}
     return render_to_response(
         env.template,
         formas,

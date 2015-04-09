@@ -1,7 +1,5 @@
 from Base import messages as msgs
 from Base.views import returnToHome
-from django.shortcuts import render
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core import urlresolvers
 from django.db import transaction
@@ -107,3 +105,16 @@ def push_get(request, id=None, env=None, add=False, change=False, delete=False):
         generate_msg(request, RED) #TODO
 
     return instance
+
+
+def delete_password(request, id=None):
+    if request.user.has_perm('Salus.delete_password') and id is not None:
+        deleted = queries.delete_password(id)
+        if deleted is True:
+            generate_msg(request, GREEN, msgs.SUCCESS, 'Your password has been successfully deleted.')
+        else:
+            generate_msg(request, RED, msgs.ERROR, msgs.errors_list['title']['500'])
+        return HttpResponseRedirect(urlresolvers.reverse('list_password'))
+    else:
+        generate_msg(request, RED, msgs.ERROR, msgs.errors_list['title']['403'])
+        return returnToHome()

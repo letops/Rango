@@ -27,3 +27,10 @@ class Environment:
             self.data_model = models.RangoUser
             self.template = 'lists.html'
             self.function = queries.UsersListQuery
+
+        if self.action == "change_user":
+            self.model = 'RangoUser'
+            self.data_model = models.RangoUser
+            self.form = forms.RangoUserProfileForm
+            self.template = 'profile.html'
+            self.action_completed_urlname = 'home'

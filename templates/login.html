@@ -17,9 +17,9 @@
       <h2>Welcome to Rango!</h2>
       <h2><img src="{% static 'img/rango.png' %}" class="img-circle img-responsive img-thumbnail center-block"></h2>
         {% if next %}
-        <form action="{% url 'login' %}?next={{ next }}" method="post" class="smart-form client-form">
+        <form action="{% url 'login' %}?next={{ next }}" method="post">
         {% else %}
-        <form action="{% url 'login' %}" method="post" class="smart-form client-form">
+        <form action="{% url 'login' %}" method="post">
         {% endif %}
           {% csrf_token %}
           <div class="form-group">

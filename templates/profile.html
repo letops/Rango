@@ -1,0 +1,71 @@
+{% extends '_rangoBase.html' %}
+{% load static %}
+{% load filters %}
+
+{% block extra_css %}
+{% endblock %}
+
+{% block extra_js_top %}
+{% endblock %}
+
+{% block content %}
+  <div class="col-xs-10 col-md-8 col-xs-offset-0 col-md-offset-1">
+    <form class="form-horizontal" method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        {{ django_form.nickname.label_tag }}
+        {{ django_form.nickname }}
+        {% for error in django_form.nickname.errors %}
+          <p class="text-warning"><i class="fa fa-warning"></i> {{ error }}</p>
+        {% empty %}
+        {% endfor %}
+      </div>
+      <div class="form-group">
+        {{ django_form.fullname.label_tag }}
+        {{ django_form.fullname }}
+        {% for error in django_form.fullname.errors %}
+          <p class="text-warning"><i class="fa fa-warning"></i> {{ error }}</p>
+        {% empty %}
+        {% endfor %}
+      </div>
+      <div class="form-group">
+        {{ django_form.avatar.label_tag }}
+        {{ django_form.avatar }}
+        {% for error in django_form.avatar.errors %}
+          <p class="text-warning"><i class="fa fa-warning"></i> {{ error }}</p>
+        {% empty %}
+        {% endfor %}
+      </div>
+      <div class="form-group">
+        {{ django_form.birthday.label_tag }}
+        {{ django_form.birthday }}
+        {% for error in django_form.birthday.errors %}
+          <p class="text-warning"><i class="fa fa-warning"></i> {{ error }}</p>
+        {% empty %}
+        {% endfor %}
+      </div>
+      <div class="form-group">
+        {{ django_form.password1.label_tag }}
+        {{ django_form.password1 }}
+        {% for error in django_form.password1.errors %}
+          <p class="text-warning"><i class="fa fa-warning"></i> {{ error }}</p>
+        {% empty %}
+        {% endfor %}
+      </div>
+      <div class="form-group">
+        {{ django_form.password2.label_tag }}
+        {{ django_form.password2 }}
+        {% for error in django_form.password2.errors %}
+          <p class="text-warning"><i class="fa fa-warning"></i> {{ error }}</p>
+        {% empty %}
+        {% endfor %}
+      </div>
+      <div class="col-xs-12 col-md-4 col-xs-offset-0 col-md-offset-4">
+        <button type="submit" class="btn btn-success btn-lg btn-block"><i class="fa fa-plus"></i> Save</button>
+      </div>
+
+    </form>
+  </div>
+
+
+{% endblock %}
